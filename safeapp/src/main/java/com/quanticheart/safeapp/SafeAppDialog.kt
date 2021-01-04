@@ -94,7 +94,7 @@ internal open class SafeAppDialog(private val context: Context) {
 
     protected fun callIntentSafeApp() {
         mIntent?.let {
-            if (it.component?.packageName ?: "" == "com.iqoo.secure") {
+            if (Build.MANUFACTURER == "OPPO") {
                 requestAutoStartOppo()
             } else {
                 context.startActivity(it)
