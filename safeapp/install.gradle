@@ -31,39 +31,46 @@
  *  *        |/_/         \===/
  *  *                       =
  *  *
- *  * Copyright(c) Developed by John Alves at 2020/3/20 at 11:47:20 for quantic heart studios
+ *  * Copyright(c) Developed by John Alves at 2021/2/3 at 3:41:51 for quantic heart studios
  *
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.github.dcendents.android-maven'
 
-buildscript {
-    ext.kotlin_version = '1.4.20'
-    repositories {
-        google()
-        jcenter()
-        maven {
-            url 'https://maven.google.com'
+group = 'com.quanticheart.safeapp'
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                groupId 'com.quanticheart.safeapp'
+                artifactId 'androidlibrary'
+                name 'androidlibrary'
+                description 'An android library.'
+                url 'https://github.com/quanticheart/SafeApp'
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'QuanticHeart'
+                        name 'Jonn Alves'
+                        email 'dev.quanticheart@gmail.com'
+                    }
+                }
+
+                scm {
+                    connection 'https://github.com/quanticheart/SafeApp.git'
+                    developerConnection 'https://github.com/quanticheart/SafeApp.git'
+                    url 'https://github.com/quanticheart/SafeApp'
+                }
+            }
         }
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }

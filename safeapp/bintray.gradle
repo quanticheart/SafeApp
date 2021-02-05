@@ -1,0 +1,107 @@
+/*
+ *
+ *  *                                     /@
+ *  *                      __        __   /\/
+ *  *                     /==\      /  \_/\/
+ *  *                   /======\    \/\__ \__
+ *  *                 /==/\  /\==\    /\_|__ \
+ *  *              /==/    ||    \=\ / / / /_/
+ *  *            /=/    /\ || /\   \=\/ /
+ *  *         /===/   /   \||/   \   \===\
+ *  *       /===/   /_________________ \===\
+ *  *    /====/   / |                /  \====\
+ *  *  /====/   /   |  _________    /      \===\
+ *  *  /==/   /     | /   /  \ / / /         /===/
+ *  * |===| /       |/   /____/ / /         /===/
+ *  *  \==\             /\   / / /          /===/
+ *  *  \===\__    \    /  \ / / /   /      /===/   ____                    __  _         __  __                __
+ *  *    \==\ \    \\ /____/   /_\ //     /===/   / __ \__  ______  ____ _/ /_(_)____   / / / /__  ____ ______/ /_
+ *  *    \===\ \   \\\\\\\/   ///////     /===/  / / / / / / / __ \/ __ `/ __/ / ___/  / /_/ / _ \/ __ `/ ___/ __/
+ *  *      \==\/     \\\\/ / //////       /==/  / /_/ / /_/ / / / / /_/ / /_/ / /__   / __  /  __/ /_/ / /  / /_
+ *  *      \==\     _ \\/ / /////        |==/   \___\_\__,_/_/ /_/\__,_/\__/_/\___/  /_/ /_/\___/\__,_/_/   \__/
+ *  *        \==\  / \ / / ///          /===/
+ *  *        \==\ /   / / /________/    /==/
+ *  *          \==\  /               | /==/
+ *  *          \=\  /________________|/=/
+ *  *            \==\     _____     /==/
+ *  *           / \===\   \   /   /===/
+ *  *          / / /\===\  \_/  /===/
+ *  *         / / /   \====\ /====/
+ *  *        / / /      \===|===/
+ *  *        |/_/         \===/
+ *  *                       =
+ *  *
+ *  * Copyright(c) Developed by John Alves at 2021/2/3 at 3:41:51 for quantic heart studios
+ *
+ */
+
+//https://cuttlesoft.com/blog/how-to-publish-an-android-library-to-jcenter/
+apply plugin: 'com.jfrog.bintray'
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    excludes = ['**/*.kt'] // < ---- Exclude all kotlin files from javadoc file.
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(new FileInputStream("local.properties"))
+
+version = '1.0.0'
+
+project.ext {
+    mavGitUrl = 'https://github.com/quanticheart/SafeApp.git'
+    mavProjectName = 'SafeApp'
+    mavLibraryLicenses = ["Apache-2.0": 'http://www.apache.org/licenses/LICENSE-2.0.txt']
+    mavLibraryDescription = "An Awesome Android library"
+    mavPublishToMavenLocal = true
+    mavSiteUrl = 'https://github.com/quanticheart/SafeApp'
+}
+
+// Bintray
+bintray {
+    user = 'jonn255d'
+    key = '904bad0d324965b90712454fa3a1f6a357dfc13b'
+
+    publications = ['Production']
+    configurations = ['archives']
+    override = true
+
+    pkg {
+        userOrg = 'quanticheart'
+        repo = 'SafeApp'
+        name = 'com.quanticheart.safeapp'
+        description = "It's an awesome lib"
+        licenses = ['Apache-2.0']
+
+        configurations = ['archives']
+        desc = 'An android library.'
+        websiteUrl = 'https://github.com/quanticheart/SafeApp'
+        vcsUrl = 'https://github.com/quanticheart/SafeApp.git'
+        licenses = ["Apache-2.0"]
+        publish = true
+        publicDownloadNumbers = true
+
+        version {
+            name = this.version
+            desc = "Version ${this.version}"
+            released = new Date()
+            vcsTag = this.version
+        }
+    }
+}

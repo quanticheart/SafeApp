@@ -31,39 +31,57 @@
  *  *        |/_/         \===/
  *  *                       =
  *  *
- *  * Copyright(c) Developed by John Alves at 2020/3/20 at 11:47:20 for quantic heart studios
+ *  * Copyright(c) Developed by John Alves at 2021/2/3 at 3:41:51 for quantic heart studios
  *
  */
+//https://medium.com/swlh/how-to-publish-and-distribute-your-android-library-ce845c68c7f7
+apply plugin: 'com.jfrog.bintray'
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+group 'com.quanticheart.safeapp'
+version '1.0.0'
 
-buildscript {
-    ext.kotlin_version = '1.4.20'
-    repositories {
-        google()
-        jcenter()
-        maven {
-            url 'https://maven.google.com'
+project.ext {
+    mavGitUrl = 'https://github.com/quanticheart/SafeApp'
+    mavProjectName = 'SafeApp'
+    mavLibraryLicenses = ["Apache-2.0":'http://www.apache.org/licenses/LICENSE-2.0.txt']
+    mavLibraryDescription = "An Awesome Android library"
+    mavPublishToMavenLocal = true
+    mavSiteUrl = 'https://github.com/quanticheart/SafeApp'
+}
+
+def properties = new Properties()
+properties.load(new FileInputStream("local.properties"))
+
+bintray {
+    user = 'jonn255d'
+    key = '904bad0d324965b90712454fa3a1f6a357dfc13b'
+
+    publications = ['Production']
+    configurations = ['archives']
+    override = true
+
+    pkg {
+        userOrg = 'quanticheart'
+        repo = 'SafeApp'
+        name = 'com.quanticheart.safeapp'
+        description = "It's an awesome lib"
+        licenses = ['Apache-2.0']
+
+        configurations = ['archives']
+        desc = 'An android library.'
+        websiteUrl = 'https://github.com/quanticheart/SafeApp'
+        vcsUrl = 'https://github.com/quanticheart/SafeApp.git'
+        licenses = ["Apache-2.0"]
+        publish = true
+        publicDownloadNumbers = true
+
+        version {
+            name = this.version
+            desc = "Version ${this.version}"
+            released = new Date()
+            vcsTag = this.version
         }
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+apply from: 'https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle'
