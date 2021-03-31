@@ -3,5 +3,5 @@
 [![](https://jitpack.io/v/quanticheart/SafeApp.svg)](https://jitpack.io/#quanticheart/SafeApp)
 
     dependencies {
-	        implementation 'com.github.quanticheart:SafeApp:1.0.3'
+	        implementation 'com.github.quanticheart:SafeApp:1.0.4'
 	}
