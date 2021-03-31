@@ -60,21 +60,6 @@ object IntentsPackagesConstants {
             )
         ), Intent().setComponent(
             ComponentName(
-                "com.coloros.safecenter",
-                "com.coloros.safecenter.permission.startup.StartupAppListActivity"
-            )
-        ), Intent().setComponent(
-            ComponentName(
-                "com.coloros.safecenter",
-                "com.coloros.safecenter.startupapp.StartupAppListActivity"
-            )
-        ), Intent().setComponent(
-            ComponentName(
-                "com.oppo.safe",
-                "com.oppo.safe.permission.startup.StartupAppListActivity"
-            )
-        ), Intent().setComponent(
-            ComponentName(
                 "com.iqoo.secure",
                 "com.iqoo.secure.ui.phoneoptimize.AddWhiteListActivity"
             )

@@ -40,7 +40,6 @@
 package com.quanticheart.safeapp
 
 import android.content.Context
-import android.os.Build
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.checkbox_layout.view.*
@@ -62,9 +61,8 @@ internal class SafeDialog(context: Context) : SafeAppDialog(context) {
                 .setMessage(context.getString(R.string.msg_activy_safeapp, getAppName()))
                 .setView(checkBoxView)
                 .setNegativeButton(context.getString(R.string.label_not_now)) { dialog, _ -> dialog.dismiss() }
-
-            if (Build.MANUFACTURER != "OPPO")
-                dialog.setPositiveButton(context.getString(R.string.label_open)) { _, _ -> callIntentSafeApp() }
+//            if (Build.MANUFACTURER != "OPPO")
+            dialog.setPositiveButton(context.getString(R.string.label_open)) { _, _ -> callIntentSafeApp() }
 
             dialog.show()
         }
